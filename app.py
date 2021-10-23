@@ -59,6 +59,14 @@ def get_comment(comment_id):
     )
 
 
+@app.route("/comments", methods=["GET"])
+def get_comment_all():
+    return render_template(
+        "comments.html",
+        comments=Comment.query.order_by(Comment.comment_id.desc()).all(),
+    )
+
+
 # CLI用 DB初期化
 @app.cli.command("init-db")
 def init_db():

@@ -8,7 +8,13 @@ button.addEventListener("click", (event) => {
   obj.title = data.get("title");
   obj.text = data.get("text");
   obj.attribute = Number(data.get("sanpi"));
-  fetch("/comment", { method: "POST", body: JSON.stringify(obj) })
+  fetch("/comment", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=UTF-8"
+    },
+    body: JSON.stringify(obj)
+  })
     .then((res) => { return res.text(); })
     .then((data) => { console.log(data) })
     .catch((err) => { console.log(err); });

@@ -4,19 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="https://kakudo415.github.io/null.css/2.4.css">
+  <link rel="stylesheet" href="static/css/index.css">
   <script src="static/js/index.js" defer></script>
 </head>
 <body>
-  <form id="form">
-    <input type="text" name="title" id="title">
-    <input type="text" name="text" id="text">
-    <input type="radio" name="sanpi" id="sansei" value="1">
-    <label for="sansei">賛成</label>
-    <input type="radio" name="sanpi" id="churitsu" value="0">
-    <label for="churitsu">中立</label>
-    <input type="radio" name="sanpi" id="hantai" value="-1">
-    <label for="hantai">反対</label>
-    <button type="button" id="button">送信</button>
-  </form>
+  <header>
+
+  </header>
+  <main>
+    <div class="new-topic-form">
+      <form class="new-topic-form">
+        <input type="text" name="title" placeholder="議題">
+        <input type="text" name="content" placeholder="あなたの考えを共有してみてください！">
+        <div class="position">
+          <div>
+            <input type="radio" name="position" id="position-form-agree" class="new-topic-form-position" value="agree">
+            <label for="position-form-agree">賛成</label>
+          </div>
+          <div>
+            <input type="radio" name="position" id="position-form-neutral" class="new-topic-form-position" value="neutral">
+            <label for="position-form-neutral">中立</label>
+          </div>
+          <div>
+            <input type="radio" name="position" id="position-form-disagree" class="new-topic-form-position" value="disagree">
+            <label for="position-form-disagree">反対</label>
+          </div>
+        </div>
+        <button type="button" class="new-topic-form-submit-button">送信</button>
+      </form>
+    </div>
+    <div class="new-topics">
+
+    </div>
+  </main>
 </body>
 </html>

@@ -1,0 +1,29 @@
+div.new-topic-form {
+  padding: 0 0.5rem;
+}
+
+form.new-topic-form input[type="text"] {
+  margin: 0.5rem 0 0;
+  padding: 0.5rem;
+  width: 100%;
+  border: 1px solid #000;
+}
+
+form.new-topic-form .position {
+  padding: 0.5rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+form.new-topic-form input[type="radio"].new-topic-form-position {
+  appearance: auto;
+}
+
+form.new-topic-form button.new-topic-form-submit-button {
+  margin: 0.5rem 0 0;
+  padding: 0.5rem;
+  width: 100%;
+  border: 1px solid #0004;
+  cursor: pointer;
+}

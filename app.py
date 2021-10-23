@@ -60,7 +60,7 @@ def get_comment(comment_id):
 
 
 @app.route("/comments", methods=["GET"])
-def get_comment_all():
+def get_comments():
     return render_template(
         "comments.html",
         comments=Comment.query.order_by(Comment.comment_id.desc()).all(),

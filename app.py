@@ -33,7 +33,7 @@ def post_comment():
     comment = json.loads(request.data)
     new_comment = Comment(
         comment_id=str(random.randint(1, 100000)),
-        parent_comment_id=comment["parent_comment_id"],
+        parent_comment_id=str(comment["parent_comment_id"]),
         title=comment["title"],
         text=comment["text"],
         attribute=comment["attribute"],

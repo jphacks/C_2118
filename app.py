@@ -42,6 +42,8 @@ def post_comment():
     db.session.add(new_comment)
     db.session.commit()
 
+    return comment["title"]
+
 
 @app.route("/comment/<comment_id>", methods=["GET"])
 def get_comment(comment_id):

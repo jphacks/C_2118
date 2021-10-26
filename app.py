@@ -65,7 +65,7 @@ def get_comment(comment_id):
         parent_comment_id=comment.parent_comment_id,
         title=comment.title,
         text=comment.text,
-        attribute=comment.attribute
+        attribute=comment.attribute,
     )
 
 
@@ -99,9 +99,12 @@ def get_comments():
     )
 
 
-@app.route("/comment/<parent_comment_id>/parents", methods=["GET"])
-def get_comment_parents(parent_comment_id):
+@app.route("/comment/<comment_id>/parents", methods=["GET"])
+def get_comment_parents(comment_id):
     parents = []
+    parent_comment_id = (
+        Comment.query.filter_by(comment_id=comment_id).first().parent_comment_id
+    )
     while parent_comment_id != "0":  # 一番上の親コメントまで
         parents.append(
             Comment.query.filter_by(comment_id=parent_comment_id).first().serialize()

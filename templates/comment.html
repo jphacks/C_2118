@@ -11,9 +11,9 @@
 <body>
   <main>
     <div class="parent-comments"></div>
-    <div class="comment {% if attribute == 1%} agree {% elif attribute == -1 %} disagree {% else %} neutral {% endif %}">
+    <div class="comment {% if position == 1%} agree {% elif position == -1 %} disagree {% else %} neutral {% endif %}">
       <h2>{{ title }}</h2>
-      <p>{{ text }}</p>
+      <p>{{ body }}</p>
     </div>
     <p class="section-message">「{{ title }}」へのあなたの意見は？</p>
     <div class="comment reply">

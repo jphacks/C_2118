@@ -25,16 +25,16 @@ class Comment(db.Model):
     comment_id = db.Column(db.String, primary_key=True)  # コメントID
     parent_comment_id = db.Column(db.String, nullable=False)  # 親のコメントID
     title = db.Column(db.String, nullable=False)  # タイトル
-    text = db.Column(db.String, nullable=False)  # 本文
-    attribute = db.Column(db.Integer, nullable=False)  # 賛成 or 反対 or 中立
+    body = db.Column(db.String, nullable=False)  # 本文
+    position = db.Column(db.Integer, nullable=False)  # 賛成 or 反対 or 中立
 
     def serialize(self):
         return {
             "comment_id": self.comment_id,
             "parent_comment_id": self.parent_comment_id,
             "title": self.title,
-            "text": self.text,
-            "attribute": self.attribute,
+            "body": self.body,
+            "position": self.position,
         }
 
 
@@ -51,8 +51,8 @@ def post_comment():
         comment_id=comment_id,
         parent_comment_id=str(comment["parent_comment_id"]),
         title=comment["title"],
-        text=comment["text"],
-        attribute=comment["attribute"],
+        body=comment["body"],
+        position=comment["position"],
     )
 
     db.session.add(new_comment)
@@ -70,21 +70,21 @@ def get_comment(comment_id):
         comment_id=comment.comment_id,
         parent_comment_id=comment.parent_comment_id,
         title=comment.title,
-        text=comment.text,
-        attribute=comment.attribute,
+        body=comment.body,
+        position=comment.position,
     )
 
 
 @app.route("/comment/<comment_id>/replies", methods=["GET"])
 def get_reply_comments(comment_id):
     agree_replies = Comment.query.filter_by(
-        parent_comment_id=comment_id, attribute=1
+        parent_comment_id=comment_id, position=1
     ).all()
     disagree_replies = Comment.query.filter_by(
-        parent_comment_id=comment_id, attribute=-1
+        parent_comment_id=comment_id, position=-1
     ).all()
     neutral_replies = Comment.query.filter_by(
-        parent_comment_id=comment_id, attribute=0
+        parent_comment_id=comment_id, position=0
     ).all()
     return jsonify(
         {

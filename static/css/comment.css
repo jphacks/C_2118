@@ -3,7 +3,7 @@ main {
 }
 
 main .section-message {
-  margin: 1rem 0;
+  margin: 1rem 0 1rem -0.25rem;
   color: #000A;
   font-weight: bold;
 }
@@ -13,6 +13,13 @@ main .comment {
   position: relative;
   padding: 0 1rem 1rem 0.9rem;
   border-left: 0.2rem dotted #0005;
+}
+
+main .comment p.created-at {
+  margin: 0.5rem 0 0;
+  color: #000A;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
 }
 
 main .comment::before {
@@ -47,7 +54,11 @@ main .reply.comment {
   padding: 0 1rem 0 1.1rem;
   border-left: none;
 }
+main .replies .comment:first-child {
+  margin: 0;
+}
 main .replies .comment {
+  margin: 1rem 0 0;
   padding: 0 1rem 0 1.1rem;
   border-left: none;
 }

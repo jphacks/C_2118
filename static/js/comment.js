@@ -97,9 +97,13 @@ const makeCommentElm = (json) => {
   commentTitleElm.textContent = json.title;
   const commentContentElm = document.createElement("p");
   commentContentElm.textContent = json.body;
+  const createdAtElm = document.createElement("p");
+  createdAtElm.classList.add("created-at");
+  createdAtElm.textContent = json.datetime;
 
   commentElm.appendChild(commentTitleElm);
   commentElm.appendChild(commentContentElm);
+  commentElm.appendChild(createdAtElm);
   return commentElm;
 };
 

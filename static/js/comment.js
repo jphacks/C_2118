@@ -1,3 +1,4 @@
+const parentComments = document.querySelector(".parent-comments");
 const replyComment = document.querySelector(".comment.reply");
 const newCommentForm = document.querySelector("form.new-comment-form");
 const newCommentFormSubmitButton = document.querySelector("button.new-comment-form-submit-button");
@@ -67,6 +68,17 @@ const fetchReplies = async () => {
     });
 };
 
+const fetchParents = async () => {
+  return fetch(`${location.pathname}/parents`)
+    .then((response) => {
+      return response.json();
+    }).then((responseJSON) => {
+      return responseJSON;
+    }).catch((error) => {
+      console.error(error);
+    });
+};
+
 const makeCommentElm = (json) => {
   const commentElm = document.createElement("div");
   commentElm.classList.add("comment");
@@ -106,3 +118,11 @@ fetchReplies()
       neutralReplies.appendChild(makeCommentElm(reply));
     }
   });
+
+fetchParents()
+  .then((parents) => {
+    console.log(parents);
+    for (parent of parents) {
+      parentComments.prepend(makeCommentElm(parent));
+    }
+  })

@@ -1,0 +1,79 @@
+main .section-message {
+  margin: 1.5rem 0 1rem;
+  padding: 0 0.5rem;
+  font-weight: bold;
+}
+
+main .comment {
+  margin: 0.5rem 0;
+  padding: 0 0.5rem 0 1.5rem;
+  position: relative;
+}
+
+main .comment::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0.5rem;
+  height: 100%;
+  width: 0.5rem;
+  background: #000000;
+  border-radius: 0.25rem;
+}
+
+main .comment.agree::before {
+  background: #2196F3;
+}
+
+main .comment.disagree::before {
+  background: #F44336;
+}
+
+main .comment.neutral::before {
+  background: #9E9E9E;
+}
+
+main .comment h2 {
+  font-weight: bold;
+  line-height: 2rem;
+}
+
+main .comment h2 a:hover {
+  text-decoration: underline;
+}
+
+main .comment p {
+  line-height: 2rem;
+}
+
+main div.new-comment-form {
+  padding: 0 0.5rem;
+}
+
+main form.new-comment-form input[type="text"] {
+  width: 100%;
+  line-height: 2rem;
+}
+main form.new-comment-form textarea {
+  width: 100%;
+  line-height: 2rem;
+}
+
+main form.new-comment-form .position {
+  padding: 0.5rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+main form.new-comment-form input[type="radio"].new-comment-form-position {
+  appearance: auto;
+}
+
+main form.new-comment-form button.new-comment-form-submit-button {
+  margin: 0.5rem 0 0;
+  padding: 0.5rem;
+  width: 100%;
+  border: 1px solid #0004;
+  cursor: pointer;
+}

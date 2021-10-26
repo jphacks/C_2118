@@ -22,6 +22,15 @@ class Comment(db.Model):
     text = db.Column(db.String, nullable=False)  # 本文
     attribute = db.Column(db.Integer, nullable=False)  # 賛成 or 反対 or 中立
 
+    def serialize(self):
+        return {
+            "comment_id": self.comment_id,
+            "parent_comment_id": self.parent_comment_id,
+            "title": self.title,
+            "text": self.text,
+            "attribute": self.attribute
+        }
+
 
 @app.route("/")
 def index():
@@ -58,6 +67,14 @@ def get_comment(comment_id):
         text=comment.text,
         attribute=comment.attribute,
     )
+
+
+@app.route("/comment/<comment_id>/replies", methods=["GET"])
+def get_reply_comments(comment_id):
+    agree_replies = Comment.query.filter_by(parent_comment_id=comment_id, attribute=1).all()
+    disagree_replies = Comment.query.filter_by(parent_comment_id=comment_id, attribute=-1).all()
+    neutral_replies = Comment.query.filter_by(parent_comment_id=comment_id, attribute=0).all()
+    return jsonify({"agree": [agree_reply.serialize() for agree_reply in agree_replies], "disagree": [disagree_reply.serialize() for disagree_reply in disagree_replies], "neutral": [neutral_reply.serialize() for neutral_reply in neutral_replies]})
 
 
 @app.route("/comments", methods=["GET"])

@@ -32,15 +32,15 @@ newCommentFormSubmitButton.addEventListener("click", () => {
   let requestData = {};
   requestData.parent_comment_id = commentID;
   requestData.title = formData.get("title");
-  requestData.text = formData.get("content");
+  requestData.body = formData.get("body");
   if (formData.get("position") === "agree") {
-    requestData.attribute = 1;
+    requestData.position = 1;
   }
   if (formData.get("position") === "neutral") {
-    requestData.attribute = 0;
+    requestData.position = 0;
   }
   if (formData.get("position") === "disagree") {
-    requestData.attribute = -1;
+    requestData.position = -1;
   }
   fetch(`/comment`, {
     method: "POST",
@@ -80,9 +80,10 @@ const fetchParents = async () => {
 };
 
 const makeCommentElm = (json) => {
-  const commentElm = document.createElement("div");
+  const commentElm = document.createElement("a");
+  commentElm.setAttribute("href", `/comment/${json.comment_id}`);
   commentElm.classList.add("comment");
-  switch (json.attribute) {
+  switch (json.position) {
     case 1:
       commentElm.classList.add("agree");
       break;
@@ -93,13 +94,10 @@ const makeCommentElm = (json) => {
       commentElm.classList.add("neutral");
   }
   const commentTitleElm = document.createElement("h2");
-  const commentTitleLinkElm = document.createElement("a");
-  commentTitleLinkElm.setAttribute("href", json.comment_id);
-  commentTitleLinkElm.textContent = json.title;
+  commentTitleElm.textContent = json.title;
   const commentContentElm = document.createElement("p");
-  commentContentElm.textContent = json.text;
+  commentContentElm.textContent = json.body;
 
-  commentTitleElm.appendChild(commentTitleLinkElm);
   commentElm.appendChild(commentTitleElm);
   commentElm.appendChild(commentContentElm);
   return commentElm;
@@ -107,6 +105,15 @@ const makeCommentElm = (json) => {
 
 fetchReplies()
   .then((replies) => {
+    if (replies.agree.length > 0) {
+      document.querySelector(".section-message.agree").style.display = "block";
+    }
+    if (replies.disagree.length > 0) {
+      document.querySelector(".section-message.disagree").style.display = "block";
+    }
+    if (replies.neutral.length > 0) {
+      document.querySelector(".section-message.neutral").style.display = "block";
+    }
     console.log(replies);
     for (reply of replies.agree) {
       agreeReplies.appendChild(makeCommentElm(reply));

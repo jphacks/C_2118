@@ -2,8 +2,14 @@ from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 import json
-
 import random
+import requests
+import os
+
+# 環境変数
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__, static_folder="static")
 
@@ -112,6 +118,45 @@ def get_comment_parents(comment_id):
         parent_comment_id = parents[-1]["parent_comment_id"]
 
     return jsonify(parents)
+
+
+# キーワード抽出
+def get_keywords():
+    item_data = {
+        "app_id": os.environ["GOO_LAB_APP_ID"],
+        "title": "",
+        "body": "",
+        "max_num": 10,
+    }
+    try:
+        response = requests.post("https://labs.goo.ne.jp/api/keyword", json=item_data)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:  # エラーの場合のみ
+        print(e)
+    else:  # 正常に処理された場合のみ
+        response_json = json.loads(response.text)
+        print(response_json)
+    finally:  # 常に実行
+        pass
+
+
+# テキストペア類似度
+def get_textpair():
+    item_data = {
+        "app_id": os.environ["GOO_LAB_APP_ID"],
+        "text1": "",
+        "text2": "",
+    }
+    try:
+        response = requests.post("https://labs.goo.ne.jp/api/textpair", json=item_data)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:  # エラーの場合のみ
+        print(e)
+    else:  # 正常に処理された場合のみ
+        response_json = json.loads(response.text)
+        print(response_json)
+    finally:  # 常に実行
+        pass
 
 
 # CLI用 DB初期化

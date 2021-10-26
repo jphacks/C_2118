@@ -28,7 +28,7 @@ class Comment(db.Model):
             "parent_comment_id": self.parent_comment_id,
             "title": self.title,
             "text": self.text,
-            "attribute": self.attribute
+            "attribute": self.attribute,
         }
 
 
@@ -65,16 +65,30 @@ def get_comment(comment_id):
         parent_comment_id=comment.parent_comment_id,
         title=comment.title,
         text=comment.text,
-        attribute=comment.attribute,
+        attribute=comment.attribute
     )
 
 
 @app.route("/comment/<comment_id>/replies", methods=["GET"])
 def get_reply_comments(comment_id):
-    agree_replies = Comment.query.filter_by(parent_comment_id=comment_id, attribute=1).all()
-    disagree_replies = Comment.query.filter_by(parent_comment_id=comment_id, attribute=-1).all()
-    neutral_replies = Comment.query.filter_by(parent_comment_id=comment_id, attribute=0).all()
-    return jsonify({"agree": [agree_reply.serialize() for agree_reply in agree_replies], "disagree": [disagree_reply.serialize() for disagree_reply in disagree_replies], "neutral": [neutral_reply.serialize() for neutral_reply in neutral_replies]})
+    agree_replies = Comment.query.filter_by(
+        parent_comment_id=comment_id, attribute=1
+    ).all()
+    disagree_replies = Comment.query.filter_by(
+        parent_comment_id=comment_id, attribute=-1
+    ).all()
+    neutral_replies = Comment.query.filter_by(
+        parent_comment_id=comment_id, attribute=0
+    ).all()
+    return jsonify(
+        {
+            "agree": [agree_reply.serialize() for agree_reply in agree_replies],
+            "disagree": [
+                disagree_reply.serialize() for disagree_reply in disagree_replies
+            ],
+            "neutral": [neutral_reply.serialize() for neutral_reply in neutral_replies],
+        }
+    )
 
 
 @app.route("/comments", methods=["GET"])
@@ -83,6 +97,18 @@ def get_comments():
         "comments.html",
         comments=Comment.query.order_by(Comment.comment_id.desc()).all(),
     )
+
+
+@app.route("/comment/<parent_comment_id>/parents", methods=["GET"])
+def get_comment_parents(parent_comment_id):
+    parents = []
+    while parent_comment_id != "0":  # 一番上の親コメントまで
+        parents.append(
+            Comment.query.filter_by(comment_id=parent_comment_id).first().serialize()
+        )
+        parent_comment_id = parents[-1]["parent_comment_id"]
+
+    return jsonify(parents)
 
 
 # CLI用 DB初期化

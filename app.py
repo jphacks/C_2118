@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 
 import json
@@ -48,21 +48,27 @@ def index():
 
 @app.route("/comment", methods=["POST"])
 def post_comment():
-    comment = json.loads(request.data)
-    comment_id = str(random.randint(1, 100000))  # コメントID生成
-    new_comment = Comment(
-        comment_id=comment_id,
-        parent_comment_id=str(comment["parent_comment_id"]),
-        title=comment["title"],
-        body=comment["body"],
-        position=comment["position"],
-        datetime=datetime.datetime.today(),
-    )
+    try:
+        comment = json.loads(request.data)
+        comment_id = str(random.randint(1, 100000))  # コメントID生成
+        new_comment = Comment(
+            comment_id=comment_id,
+            parent_comment_id=str(comment["parent_comment_id"]),
+            title=comment["title"],
+            body=comment["body"],
+            position=comment["position"],
+            datetime=datetime.datetime.today(),
+        )
 
-    db.session.add(new_comment)
-    db.session.commit()
-
-    return jsonify({"comment_id": comment_id})
+    except KeyError as e:
+        print(e)
+        abort(400)
+    else:
+        db.session.add(new_comment)
+        db.session.commit()
+        return jsonify({"comment_id": comment_id})
+    finally:
+        pass
 
 
 @app.route("/comment/<comment_id>", methods=["GET"])

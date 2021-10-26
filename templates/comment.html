@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="https://kakudo415.github.io/null.css/2.4.css">
+  <link rel="stylesheet" href="/static/css/comment.css">
+  <script src="/static/js/comment.js" defer></script>
 </head>
 <body>
-    <p>{{comment_id}}</p>
-    <p>{{parent_comment_id}}</p>
-    <p>{{title}}</p>
-    <p>{{text}}</p>
-    <p>{{attribute}}</p>
+  <main>
+    <div class="comment {% if attribute == 1%} agree {% elif attribute == -1 %} disagree {% else %} neutral {% endif %}">
+      <h2>{{ title }}</h2>
+      <p>{{ text }}</p>
+    </div>
+    <div class="comment reply">
+      <form class="new-comment-form">
+        <input type="text" name="title" placeholder="タイトル">
+        <textarea name="content" placeholder="あなたの考えを共有してみてください！"></textarea>
+        <div class="position">
+          <div>
+            <input type="radio" name="position" id="position-form-agree" class="new-comment-form-position" value="agree">
+            <label for="position-form-agree">賛成</label>
+          </div>
+          <div>
+            <input type="radio" name="position" id="position-form-neutral" class="new-comment-form-position" value="neutral">
+            <label for="position-form-neutral">中立</label>
+          </div>
+          <div>
+            <input type="radio" name="position" id="position-form-disagree" class="new-comment-form-position" value="disagree">
+            <label for="position-form-disagree">反対</label>
+          </div>
+        </div>
+        <button type="button" class="new-comment-form-submit-button">送信</button>
+      </form>
+    </div>
+  </main>
 </body>
 </html>

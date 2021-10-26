@@ -5,6 +5,7 @@ import json
 import random
 import requests
 import os
+import datetime
 
 # 環境変数
 from dotenv import load_dotenv
@@ -27,6 +28,7 @@ class Comment(db.Model):
     title = db.Column(db.String, nullable=False)  # タイトル
     body = db.Column(db.String, nullable=False)  # 本文
     position = db.Column(db.Integer, nullable=False)  # 賛成 or 反対 or 中立
+    datetime = db.Column(db.DateTime, nullable=False)  # 日付時間
 
     def serialize(self):
         return {
@@ -35,6 +37,7 @@ class Comment(db.Model):
             "title": self.title,
             "body": self.body,
             "position": self.position,
+            "datetime": f"{self.datetime:%Y-%m-%d %H:%M:%S}",
         }
 
 
@@ -53,6 +56,7 @@ def post_comment():
         title=comment["title"],
         body=comment["body"],
         position=comment["position"],
+        datetime=datetime.datetime.today(),
     )
 
     db.session.add(new_comment)
@@ -75,6 +79,7 @@ def get_comment(comment_id):
         title=comment.title,
         body=comment.body,
         position=comment.position,
+        datetime=f"{comment.datetime:%Y-%m-%d %H:%M:%S}",
     )
 
 

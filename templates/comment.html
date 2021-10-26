@@ -15,33 +15,34 @@
       <h2>{{ title }}</h2>
       <p>{{ body }}</p>
     </div>
-    <p class="section-message">「{{ title }}」へのあなたの意見は？</p>
-    <div class="comment reply">
-      <form class="new-comment-form">
-        <input type="text" name="title" placeholder="タイトル">
-        <textarea name="content" placeholder="あなたの考えを共有してみてください！"></textarea>
-        <div class="position">
-          <div>
-            <input type="radio" name="position" id="position-form-agree" class="new-comment-form-position" value="agree">
-            <label for="position-form-agree">賛成</label>
+    <div class="current-comment">
+      <div class="comment reply">
+        <form class="new-comment-form">
+          <input type="text" name="title" placeholder="タイトル">
+          <textarea name="body" placeholder="あなたの考えを共有してみてください！"></textarea>
+          <div class="position">
+            <div>
+              <input type="radio" name="position" id="position-form-agree" class="new-comment-form-position" value="agree">
+              <label for="position-form-agree">賛成</label>
+            </div>
+            <div>
+              <input type="radio" name="position" id="position-form-neutral" class="new-comment-form-position" value="neutral">
+              <label for="position-form-neutral">中立</label>
+            </div>
+            <div>
+              <input type="radio" name="position" id="position-form-disagree" class="new-comment-form-position" value="disagree">
+              <label for="position-form-disagree">反対</label>
+            </div>
           </div>
-          <div>
-            <input type="radio" name="position" id="position-form-neutral" class="new-comment-form-position" value="neutral">
-            <label for="position-form-neutral">中立</label>
-          </div>
-          <div>
-            <input type="radio" name="position" id="position-form-disagree" class="new-comment-form-position" value="disagree">
-            <label for="position-form-disagree">反対</label>
-          </div>
-        </div>
-        <button type="button" class="new-comment-form-submit-button">送信</button>
-      </form>
+          <button type="button" class="new-comment-form-submit-button">送信</button>
+        </form>
+      </div>
     </div>
-    <p class="section-message">「{{ title }}」に反対の意見</p>
+    <p class="section-message disagree" style="display: none;">{{ title }} への反対意見</p>
     <div class="disagree-replies"></div>
-    <p class="section-message">「{{ title }}」に賛成の意見</p>
+    <p class="section-message agree" style="display: none;">{{ title }} への賛成意見</p>
     <div class="agree-replies"></div>
-    <p class="section-message">「{{ title }}」、その他の意見</p>
+    <p class="section-message neutral" style="display: none;">{{ title }} へのその他の意見</p>
     <div class="neutral-replies"></div>
   </main>
 </body>

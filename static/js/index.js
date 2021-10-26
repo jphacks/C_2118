@@ -6,15 +6,15 @@ newTopicFormSubmitButton.addEventListener("click", () => {
   let requestData = {};
   requestData.parent_comment_id = 0;
   requestData.title = formData.get("title");
-  requestData.text = formData.get("content");
+  requestData.body = formData.get("content");
   if (formData.get("position") === "agree") {
-    requestData.attribute = 1;
+    requestData.position = 1;
   }
   if (formData.get("position") === "neutral") {
-    requestData.attribute = 0;
+    requestData.position = 0;
   }
   if (formData.get("position") === "disagree") {
-    requestData.attribute = -1;
+    requestData.position = -1;
   }
   fetch("/comment", {
     method: "POST",

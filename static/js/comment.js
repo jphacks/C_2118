@@ -3,9 +3,9 @@ const replyComment = document.querySelector(".comment.reply");
 const newCommentForm = document.querySelector("form.new-comment-form");
 const newCommentFormSubmitButton = document.querySelector("button.new-comment-form-submit-button");
 
-const agreeReplies = document.querySelector(".agree-replies");
-const disagreeReplies = document.querySelector(".disagree-replies");
-const neutralReplies = document.querySelector(".neutral-replies");
+const agreeReplies = document.querySelector(".replies.agree");
+const disagreeReplies = document.querySelector(".replies.disagree");
+const neutralReplies = document.querySelector(".replies.neutral");
 
 const commentID = location.pathname.replace("/comment/", "");
 

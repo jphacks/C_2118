@@ -1,41 +1,78 @@
+main {
+  padding: 0.5rem 1rem 0.5rem 0.9rem;
+}
+
 main .section-message {
-  margin: 1.5rem 0 1rem;
-  padding: 0 0.5rem;
+  margin: 1rem 0;
+  color: #000A;
   font-weight: bold;
 }
 
 main .comment {
-  margin: 0.5rem 0;
-  padding: 0 0.5rem 0 1.5rem;
+  display: block;
   position: relative;
+  padding: 0 1rem 1rem 0.9rem;
+  border-left: 0.2rem dotted #0005;
 }
 
 main .comment::before {
-  content: "";
   position: absolute;
-  top: 0;
-  left: 0.5rem;
-  height: 100%;
-  width: 0.5rem;
-  background: #000000;
-  border-radius: 0.25rem;
+  height: 1.5rem;
+  width: 1rem;
+  padding: 0.25rem 0;
+  left: -0.6rem;
+  background: #FFF;
+}
+
+main .reply.comment::before {
+  position: absolute;
+  height: 1.5rem;
+  width: 1rem;
+  padding: 0.25rem 0;
+  left: -0.4rem;
+  background: #FFF;
 }
 
 main .comment.agree::before {
-  background: #2196F3;
+  content: "👍";
 }
-
 main .comment.disagree::before {
-  background: #F44336;
+  content: "👎";
+}
+main .comment.neutral::before {
+  content: "✋";
 }
 
-main .comment.neutral::before {
-  background: #9E9E9E;
+main .reply.comment {
+  padding: 0 1rem 0 1.1rem;
+  border-left: none;
+}
+main .agree-replies .comment {
+  padding: 0 1rem 0 1.1rem;
+  border-left: none;
+}
+main .disagree-replies .comment {
+  padding: 0 1rem 0 1.1rem;
+  border-left: none;
+}
+main .neutral-replies .comment {
+  padding: 0 1rem 0 1.1rem;
+  border-left: none;
+}
+
+main .agree-replies .comment::before {
+  left: -0.4rem;
+}
+main .disagree-replies .comment::before {
+  left: -0.4rem;
+}
+main .neutral-replies .comment::before {
+  left: -0.4rem;
 }
 
 main .comment h2 {
   font-weight: bold;
-  line-height: 2rem;
+  line-height: 1.5rem;
 }
 
 main .comment h2 a:hover {
@@ -46,13 +83,10 @@ main .comment p {
   line-height: 2rem;
 }
 
-main div.new-comment-form {
-  padding: 0 0.5rem;
-}
-
 main form.new-comment-form input[type="text"] {
   width: 100%;
-  line-height: 2rem;
+  line-height: 1.5rem;
+  font-weight: bold;
 }
 main form.new-comment-form textarea {
   width: 100%;

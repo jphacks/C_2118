@@ -65,6 +65,9 @@ def post_comment():
 def get_comment(comment_id):
     comment = Comment.query.filter_by(comment_id=comment_id).first()
 
+    if comment is None:
+        return render_template("not_found.html"), 404
+
     return render_template(
         "comment.html",
         comment_id=comment.comment_id,

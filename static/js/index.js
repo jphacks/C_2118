@@ -6,7 +6,7 @@ newTopicFormSubmitButton.addEventListener("click", () => {
   let requestData = {};
   requestData.parent_comment_id = 0;
   requestData.title = formData.get("title");
-  requestData.body = formData.get("content");
+  requestData.body = formData.get("body");
   if (formData.get("position") === "agree") {
     requestData.position = 1;
   }

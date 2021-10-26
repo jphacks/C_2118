@@ -14,6 +14,7 @@
       <h2>{{ title }}</h2>
       <p>{{ text }}</p>
     </div>
+    <p class="section-message">「{{ title }}」へのあなたの意見は？</p>
     <div class="comment reply">
       <form class="new-comment-form">
         <input type="text" name="title" placeholder="タイトル">
@@ -35,6 +36,12 @@
         <button type="button" class="new-comment-form-submit-button">送信</button>
       </form>
     </div>
+    <p class="section-message">「{{ title }}」に反対の意見</p>
+    <div class="disagree-replies"></div>
+    <p class="section-message">「{{ title }}」に賛成の意見</p>
+    <div class="agree-replies"></div>
+    <p class="section-message">「{{ title }}」、その他の意見</p>
+    <div class="neutral-replies"></div>
   </main>
 </body>
 </html>

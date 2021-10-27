@@ -1,4 +1,4 @@
-const parentComments = document.querySelector(".parent-comments");
+const commentTree = document.querySelector(".comment-tree");
 const replyComment = document.querySelector(".comment.reply");
 const newCommentForm = document.querySelector("form.new-comment-form");
 const newCommentFormSubmitButton = document.querySelector("button.new-comment-form-submit-button");
@@ -79,7 +79,7 @@ const fetchParents = async () => {
     });
 };
 
-const makeCommentElm = (json) => {
+const makeCommentElm = (json, hasReply = false) => {
   const commentElm = document.createElement("a");
   commentElm.setAttribute("href", `/comment/${json.comment_id}`);
   commentElm.classList.add("comment");
@@ -94,30 +94,45 @@ const makeCommentElm = (json) => {
       commentElm.classList.add("neutral");
   }
   const commentTitleElm = document.createElement("h2");
+  commentTitleElm.classList.add("title");
   commentTitleElm.textContent = json.title;
-  const commentContentElm = document.createElement("p");
-  commentContentElm.textContent = json.body;
-  const createdAtElm = document.createElement("p");
-  createdAtElm.classList.add("created-at");
-  createdAtElm.textContent = json.datetime;
+  const commentBodyElm = document.createElement("p");
+  commentBodyElm.classList.add("body");
+  commentBodyElm.textContent = json.body;
 
   commentElm.appendChild(commentTitleElm);
-  commentElm.appendChild(commentContentElm);
-  commentElm.appendChild(createdAtElm);
+  commentElm.appendChild(commentBodyElm);
+  if (hasReply) {
+    const commentThreadElm = document.createElement("div");
+    commentThreadElm.classList.add("thread");
+    commentElm.appendChild(commentThreadElm);
+  }
   return commentElm;
+};
+
+const openReplyForm = (position) => {
+  switch (position) {
+    case "agree":
+      document.querySelector(`.new-comment-form-position[value="agree"]`).checked = true;
+      replyComment.classList.add("agree");
+      break;
+    case "disagree":
+      document.querySelector(`.new-comment-form-position[value="disagree"]`).checked = true;
+      replyComment.classList.add("disagree");
+      break;
+    case "neutral":
+      document.querySelector(`.new-comment-form-position[value="neutral"]`).checked = true;
+      replyComment.classList.add("neutral");
+  }
+  document.querySelector(".position-buttons").style.display = "none";
+  const commentThreadElm = document.createElement("div");
+  commentThreadElm.classList.add("thread");
+  document.querySelector(".comment-tree div.comment").appendChild(commentThreadElm);
+  replyComment.style.display = "block";
 };
 
 fetchReplies()
   .then((replies) => {
-    if (replies.agree.length > 0) {
-      document.querySelector(".section-message.agree").style.display = "block";
-    }
-    if (replies.disagree.length > 0) {
-      document.querySelector(".section-message.disagree").style.display = "block";
-    }
-    if (replies.neutral.length > 0) {
-      document.querySelector(".section-message.neutral").style.display = "block";
-    }
     console.log(replies);
     for (reply of replies.agree) {
       agreeReplies.appendChild(makeCommentElm(reply));
@@ -134,6 +149,6 @@ fetchParents()
   .then((parents) => {
     console.log(parents);
     for (parent of parents) {
-      parentComments.prepend(makeCommentElm(parent));
+      commentTree.prepend(makeCommentElm(parent, true));
     }
-  })
+  });

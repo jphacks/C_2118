@@ -19,6 +19,15 @@ newCommentForm.addEventListener("change", () => {
   replyComment.classList.add(formData.get("position"));
 });
 
+newCommentForm.addEventListener("input", () => {
+  const formData = new FormData(newCommentForm);
+  if (formData.get("title") === "" || formData.get("body") === "" || formData.get("position") === "") {
+    newCommentFormSubmitButton.disabled = true;
+  } else {
+    newCommentFormSubmitButton.disabled = false;
+  }
+});
+
 newCommentFormSubmitButton.addEventListener("click", () => {
   const formData = new FormData(newCommentForm);
   let requestData = {};

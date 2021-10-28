@@ -42,6 +42,10 @@ main form.new-comment-form .position {
   justify-content: space-between;
 }
 
+main form.new-comment-form input[type="radio"].new-comment-form-position {
+  display: none;
+}
+
 .new-comment-form-position-label {
   display: block;
   padding: 0.5rem 1rem;
@@ -73,4 +77,10 @@ main form.new-comment-form button.new-comment-form-submit-button {
   border: 2px solid #000C;
   border-radius: 1rem;
   cursor: pointer;
+}
+
+main form.new-comment-form button.new-comment-form-submit-button:disabled {
+  color: #0004;
+  border: 2px solid #0004;
+  cursor: default;
 }

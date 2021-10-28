@@ -2,6 +2,15 @@ const replyComment = document.querySelector(".comment.post");
 const newCommentForm = document.querySelector("form.new-comment-form");
 const newCommentFormSubmitButton = document.querySelector("button.new-comment-form-submit-button");
 
+newCommentForm.addEventListener("input", () => {
+  const formData = new FormData(newCommentForm);
+  if (formData.get("title") === "" || formData.get("body") === "" || formData.get("position") === "") {
+    newCommentFormSubmitButton.disabled = true;
+  } else {
+    newCommentFormSubmitButton.disabled = false;
+  }
+});
+
 newCommentForm.addEventListener("change", () => {
   const formData = new FormData(newCommentForm);
 

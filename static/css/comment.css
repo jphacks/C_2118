@@ -81,10 +81,6 @@ main .position-buttons button.neutral:hover {
   border-color: #607d8b;
 }
 
-main form.new-comment-form input[type="radio"].new-comment-form-position {
-  display: none;
-}
-
 main .replies .comment {
   border-top: 1px solid #0001;
 }

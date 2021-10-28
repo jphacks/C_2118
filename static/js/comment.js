@@ -15,16 +15,8 @@ newCommentForm.addEventListener("change", () => {
   replyComment.classList.remove("agree");
   replyComment.classList.remove("neutral");
   replyComment.classList.remove("disagree");
-  switch (formData.get("position")) {
-    case "agree":
-      replyComment.classList.add("agree");
-      break;
-    case "disagree":
-      replyComment.classList.add("disagree");
-      break;
-    case "neutral":
-      replyComment.classList.add("neutral");
-  }
+
+  replyComment.classList.add(formData.get("position"));
 });
 
 newCommentFormSubmitButton.addEventListener("click", () => {

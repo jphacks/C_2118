@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="https://kakudo415.github.io/null.css/2.4.css">
+  <link rel="stylesheet" href="/static/css/common.css">
   <link rel="stylesheet" href="/static/css/index.css">
   <script src="/static/js/index.js" defer></script>
 </head>
@@ -13,25 +14,25 @@
 
   </header>
   <main>
-    <div class="new-topic-form">
-      <form class="new-topic-form">
-        <input type="text" name="title" placeholder="議題">
-        <input type="text" name="body" placeholder="あなたの考えを共有してみてください！">
+    <div class="comment post neutral">
+      <form class="new-comment-form">
+        <input class="title" type="text" name="title" placeholder="タイトル">
+        <textarea class="body" name="body" placeholder="あなたの考えを共有してみてください！"></textarea>
         <div class="position">
           <div>
-            <input type="radio" name="position" id="position-form-agree" class="new-topic-form-position" value="agree">
-            <label for="position-form-agree">賛成</label>
+            <input type="radio" name="position" id="position-form-agree" class="new-comment-form-position" value="agree">
+            <label for="position-form-agree" class="new-comment-form-position-label">賛成</label>
           </div>
           <div>
-            <input type="radio" name="position" id="position-form-neutral" class="new-topic-form-position" value="neutral">
-            <label for="position-form-neutral">中立</label>
+            <input type="radio" name="position" id="position-form-disagree" class="new-comment-form-position" value="disagree">
+            <label for="position-form-disagree" class="new-comment-form-position-label">反対</label>
           </div>
           <div>
-            <input type="radio" name="position" id="position-form-disagree" class="new-topic-form-position" value="disagree">
-            <label for="position-form-disagree">反対</label>
+            <input type="radio" name="position" id="position-form-neutral" class="new-comment-form-position" value="neutral" checked>
+            <label for="position-form-neutral" class="new-comment-form-position-label">中立</label>
           </div>
         </div>
-        <button type="button" class="new-topic-form-submit-button">送信</button>
+        <button type="button" class="new-comment-form-submit-button">送信</button>
       </form>
     </div>
     <div class="new-topics">

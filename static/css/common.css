@@ -1,0 +1,76 @@
+body {
+  color: #000C;
+}
+
+main .comment {
+  display: block;
+  position: relative;
+  padding: 0.75rem 0;
+}
+
+main .comment .title {
+  margin-left: 2rem;
+  margin-right: 0.5rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+}
+
+main .comment .body {
+  margin-left: 2rem;
+  margin-right: 0.5rem;
+  line-height: 2rem;
+}
+
+main form.new-comment-form input[type="text"] {
+  display: block;
+  width: calc(100% - 2.5rem);
+  line-height: 1.5rem;
+  font-weight: bold;
+}
+
+main form.new-comment-form textarea {
+  display: block;
+  width: calc(100% - 2.5rem);
+  resize: vertical;
+  line-height: 2rem;
+}
+main form.new-comment-form .position {
+  margin-top: 0.5rem;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.new-comment-form-position-label {
+  display: block;
+  padding: 0.5rem 1rem;
+  line-height: 1rem;
+  border: 2px solid #000C;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+#position-form-agree:checked + label {
+  background: #e3f2fd;
+  border-color: #2196f3;
+}
+#position-form-disagree:checked + label {
+  background: #ffebee;
+  border-color: #f44336;
+}
+#position-form-neutral:checked + label {
+  background: #eceff1;
+  border-color: #607d8b;
+}
+
+main form.new-comment-form button.new-comment-form-submit-button {
+  margin: 1rem 2rem 0 2rem;
+  width: calc(100% - 4rem);
+  display: block;
+  padding: 0.5rem 1rem;
+  line-height: 1rem;
+  border: 2px solid #000C;
+  border-radius: 1rem;
+  cursor: pointer;
+}

@@ -1,8 +1,19 @@
-const newTopicFormSubmitButton = document.querySelector("button.new-topic-form-submit-button");
+const replyComment = document.querySelector(".comment.post");
+const newCommentForm = document.querySelector("form.new-comment-form");
+const newCommentFormSubmitButton = document.querySelector("button.new-comment-form-submit-button");
 
-newTopicFormSubmitButton.addEventListener("click", () => {
-  const newTopicForm = document.querySelector("form.new-topic-form");
-  let formData = new FormData(newTopicForm);
+newCommentForm.addEventListener("change", () => {
+  const formData = new FormData(newCommentForm);
+
+  replyComment.classList.remove("agree");
+  replyComment.classList.remove("neutral");
+  replyComment.classList.remove("disagree");
+
+  replyComment.classList.add(formData.get("position"));
+});
+
+newCommentFormSubmitButton.addEventListener("click", () => {
+  let formData = new FormData(newCommentForm);
   let requestData = {};
   requestData.parent_comment_id = 0;
   requestData.title = formData.get("title");

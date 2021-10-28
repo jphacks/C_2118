@@ -1,22 +1,35 @@
-main {
-  padding: 0.5rem 1rem 0.5rem 0.9rem;
-}
-
 main .section-message {
-  margin: 1rem 0 1rem -0.25rem;
+  padding: 0 1rem;
   color: #000A;
   font-weight: bold;
 }
 
-main .comment {
-  display: block;
-  position: relative;
-  padding: 0 1rem 1rem 0.9rem;
-  border-left: 0.2rem dotted #0005;
+main .comment .thread {
+  position: absolute;
+  top: 2.5rem;
+  left: 1rem;
+  height: calc(100% - 2rem);
+  width: 2px;
+  background: #0008;
 }
 
-main .comment p.created-at {
-  margin: 0.5rem 0 0;
+main .comment-tree a.comment:hover, main .replies a.comment:hover {
+  background: #0001;
+}
+
+main .comment-tree div.comment {
+  padding-bottom: 1rem;
+}
+
+main .comment-tree div.comment .body {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+main .comment-tree div.comment .created-at {
+  margin-top: 0.5rem;
+  margin-left: 2rem;
+  margin-right: 0.5rem;
   color: #000A;
   font-size: 0.8rem;
   line-height: 0.8rem;
@@ -27,17 +40,7 @@ main .comment::before {
   height: 1.5rem;
   width: 1rem;
   padding: 0.25rem 0;
-  left: -0.6rem;
-  background: #FFF;
-}
-
-main .reply.comment::before {
-  position: absolute;
-  height: 1.5rem;
-  width: 1rem;
-  padding: 0.25rem 0;
-  left: -0.4rem;
-  background: #FFF;
+  left: 0.5rem;
 }
 
 main .comment.agree::before {
@@ -50,60 +53,34 @@ main .comment.neutral::before {
   content: "✋";
 }
 
-main .reply.comment {
-  padding: 0 1rem 0 1.1rem;
-  border-left: none;
-}
-main .replies .comment:first-child {
-  margin: 0;
-}
-main .replies .comment {
-  margin: 1rem 0 0;
-  padding: 0 1rem 0 1.1rem;
-  border-left: none;
-}
-main .replies .comment::before {
-  left: -0.4rem;
-}
-
-main .comment h2 {
-  font-weight: bold;
-  line-height: 1.5rem;
-}
-
-main .comment h2 a:hover {
-  text-decoration: underline;
-}
-
-main .comment p {
-  line-height: 2rem;
-}
-
-main form.new-comment-form input[type="text"] {
-  width: 100%;
-  line-height: 1.5rem;
-  font-weight: bold;
-}
-main form.new-comment-form textarea {
-  width: 100%;
-  line-height: 2rem;
-}
-
-main form.new-comment-form .position {
-  padding: 0.5rem 0 0;
+main .position-buttons {
+  margin-top: 1rem;
+  padding: 0 2rem;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
-main form.new-comment-form input[type="radio"].new-comment-form-position {
-  appearance: auto;
-}
-
-main form.new-comment-form button.new-comment-form-submit-button {
-  margin: 0.5rem 0 0;
-  padding: 0.5rem;
-  width: 100%;
-  border: 1px solid #0004;
+main .position-buttons button {
+  padding: 0.5rem 1rem;
+  border: 2px solid #000C;
+  border-radius: 1rem;
   cursor: pointer;
+}
+
+main .position-buttons button.agree:hover {
+  background: #e3f2fd;
+  border-color: #2196f3;
+}
+main .position-buttons button.disagree:hover {
+  background: #ffebee;
+  border-color: #f44336;
+}
+main .position-buttons button.neutral:hover {
+  background: #eceff1;
+  border-color: #607d8b;
+}
+
+main .replies .comment {
+  border-top: 1px solid #0001;
 }

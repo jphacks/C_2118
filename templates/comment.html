@@ -5,43 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{title}}</title>
   <link rel="stylesheet" href="https://kakudo415.github.io/null.css/2.4.css">
+  <link rel="stylesheet" href="/static/css/common.css">
   <link rel="stylesheet" href="/static/css/comment.css">
   <script src="/static/js/comment.js" defer></script>
 </head>
 <body>
   <main>
-    <div class="parent-comments"></div>
-    <div class="comment {% if position == 1%} agree {% elif position == -1 %} disagree {% else %} neutral {% endif %}">
-      <h2>{{ title }}</h2>
-      <p>{{ body }}</p>
-      <p class="created-at">{{ datetime }}</p>
+    <div class="comment-tree">
+      <div class="comment {% if position == 1%} agree {% elif position == -1 %} disagree {% else %} neutral {% endif %}">
+        <h2 class="title">{{ title }}</h2>
+        <p class="body">{{ body }}</p>
+        <p class="created-at">{{ datetime }}</p>
+        <div class="position-buttons">
+          <button type="button" class="agree" onclick="openReplyForm('agree');">賛成</button>
+          <button type="button" class="disagree" onclick="openReplyForm('disagree');">反対</button>
+          <button type="button" class="neutral" onclick="openReplyForm('neutral');">意見したい</button>
+        </div>
+      </div>
     </div>
-    <div class="comment reply neutral">
+    <div class="comment reply" style="display: none;">
       <form class="new-comment-form">
-        <input type="text" name="title" placeholder="タイトル">
-        <textarea name="body" placeholder="あなたの考えを共有してみてください！"></textarea>
+        <input class="title" type="text" name="title" placeholder="タイトル">
+        <textarea class="body" name="body" placeholder="あなたの考えを共有してみてください！"></textarea>
         <div class="position">
           <div>
             <input type="radio" name="position" id="position-form-agree" class="new-comment-form-position" value="agree">
-            <label for="position-form-agree">賛成</label>
-          </div>
-          <div>
-            <input type="radio" name="position" id="position-form-neutral" class="new-comment-form-position" value="neutral" checked>
-            <label for="position-form-neutral">中立</label>
+            <label for="position-form-agree" class="new-comment-form-position-label">賛成</label>
           </div>
           <div>
             <input type="radio" name="position" id="position-form-disagree" class="new-comment-form-position" value="disagree">
-            <label for="position-form-disagree">反対</label>
+            <label for="position-form-disagree" class="new-comment-form-position-label">反対</label>
+          </div>
+          <div>
+            <input type="radio" name="position" id="position-form-neutral" class="new-comment-form-position" value="neutral">
+            <label for="position-form-neutral" class="new-comment-form-position-label">中立</label>
           </div>
         </div>
-        <button type="button" class="new-comment-form-submit-button">送信</button>
+        <button type="button" class="new-comment-form-submit-button" disabled>送信</button>
       </form>
     </div>
-    <p class="section-message disagree" style="display: none;">{{ title }} への反対意見</p>
     <div class="replies disagree"></div>
-    <p class="section-message agree" style="display: none;">{{ title }} への賛成意見</p>
     <div class="replies agree"></div>
-    <p class="section-message neutral" style="display: none;">{{ title }} へのその他の意見</p>
     <div class="replies neutral"></div>
   </main>
 </body>

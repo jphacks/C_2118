@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
   <link rel="stylesheet" href="/static/css/index.css">
   <script src="/static/js/index.js" defer></script>
 </head>
+
 <body>
   <header>
 
@@ -20,15 +22,18 @@
         <textarea class="body" name="body" placeholder="あなたの考えを共有してみてください！"></textarea>
         <div class="position">
           <div>
-            <input type="radio" name="position" id="position-form-agree" class="new-comment-form-position" value="agree">
+            <input type="radio" name="position" id="position-form-agree" class="new-comment-form-position"
+              value="agree">
             <label for="position-form-agree" class="new-comment-form-position-label">賛成</label>
           </div>
           <div>
-            <input type="radio" name="position" id="position-form-disagree" class="new-comment-form-position" value="disagree">
+            <input type="radio" name="position" id="position-form-disagree" class="new-comment-form-position"
+              value="disagree">
             <label for="position-form-disagree" class="new-comment-form-position-label">反対</label>
           </div>
           <div>
-            <input type="radio" name="position" id="position-form-neutral" class="new-comment-form-position" value="neutral" checked>
+            <input type="radio" name="position" id="position-form-neutral" class="new-comment-form-position"
+              value="neutral" checked>
             <label for="position-form-neutral" class="new-comment-form-position-label">中立</label>
           </div>
         </div>
@@ -36,7 +41,18 @@
       </form>
     </div>
     <div class="new-topics">
-
+      {% for comment in comments %}
+      <p><a href="/comment/{{comment.comment_id}}">{{comment.comment_id}} {{comment.title}}</a>
+      </p>
+      {% endfor %}
+      <p>
+        {% if now_page > 1 %}
+        <a href="./?p={{now_page-1}}">前のページ</a>
+        {% endif %}
+        {% if not is_last_page %}
+        <a href="./?p={{now_page+1}}">次のページ</a>
+        {% endif %}
+      </p>
     </div>
   </main>
 </body>

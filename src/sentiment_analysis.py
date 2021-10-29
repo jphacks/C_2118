@@ -17,4 +17,4 @@ def predict(sentence):
     outputs = model(input_tensor, adapter_names=["sst-2"])
     result = torch.argmax(outputs[0]).item()
 
-    return "positive" if result == 1 else "negative"
+    return result

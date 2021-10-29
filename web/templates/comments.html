@@ -9,7 +9,7 @@
 
 <body>
     {% for comment in comments %}
-    <p><a href="/comment/{{comment.comment_id}}">{{comment.parent_comment_id}} {{comment.comment_id}} {{comment.title}} {{comment.body}} {{comment.position}} {{comment.datetime}} {{comment.keywords}} {{comment.similar_to}}</a></p>
+    <p><a href="/comment/{{comment.comment_id}}">{{comment.parent_comment_id}} {{comment.comment_id}} {{comment.title}} {{comment.body}} {{comment.position}} {{comment.datetime}} {{comment.keywords}} {{comment.similar_to}} {{comment.has_similar_comment}}</a></p>
     {% endfor %}
 </body>
 

@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 
+from src import sentiment_analysis
+
 import json
 import random
 import requests
@@ -180,4 +182,5 @@ def init_db():
 
 
 if __name__ == "__main__":
+    print(sentiment_analysis.predict("素晴らしい！"))
     app.run()

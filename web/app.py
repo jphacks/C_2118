@@ -7,6 +7,8 @@ import requests
 import os
 import datetime
 
+from typing import List
+
 # 環境変数
 from dotenv import load_dotenv
 
@@ -36,6 +38,8 @@ class Comment(db.Model):
     body = db.Column(db.String, nullable=False)  # 本文
     position = db.Column(db.Integer, nullable=False)  # 賛成 or 反対 or 中立
     datetime = db.Column(db.DateTime, nullable=False)  # 日付時間
+    keywords = db.Column(db.String, nullable=False)  # 抽出したキーワード
+    similar_to = db.Column(db.String, nullable=False)  # 類似しているコメントのID
 
     def serialize(self):
         return {
@@ -45,6 +49,8 @@ class Comment(db.Model):
             "body": self.body,
             "position": self.position,
             "datetime": f"{self.datetime:%Y-%m-%d %H:%M:%S}",
+            "keywords": self.keywords,
+            "similar_to": self.similar_to,
         }
 
 
@@ -71,6 +77,25 @@ def post_comment():
         print(e)
         abort(400)
     else:
+        # 類似コメント
+        candidates = []
+        for old_comment in Comment.query.order_by(Comment.comment_id.desc()).all():
+            similarity = get_similarity(new_comment.body, old_comment.body)
+            if similarity >= 0.6:  # 閾値
+                candidates.append(
+                    (similarity, old_comment.comment_id)
+                )  # (類似度, コメントID)のtupleで格納
+
+        # 候補リストが空でなければ一番類似度が高いやつを採用
+        new_comment.similar_to = (
+            list(sorted(candidates, key=lambda x: x[0]))[-1][1] if candidates else "0"
+        )
+
+        # キーワード
+        new_comment.keywords = json.dumps(
+            get_keywords(new_comment.title, new_comment.body)
+        )
+
         db.session.add(new_comment)
         db.session.commit()
         return jsonify({"comment_id": comment_id})
@@ -93,6 +118,8 @@ def get_comment(comment_id):
         body=comment.body,
         position=comment.position,
         datetime=f"{comment.datetime:%Y-%m-%d %H:%M:%S}",
+        keywords=" ".join(json.loads(comment.keywords)),
+        similar_to=comment.similar_to,
     )
 
 
@@ -142,11 +169,11 @@ def get_comment_parents(comment_id):
 
 
 # キーワード抽出
-def get_keywords():
+def get_keywords(title: str, body: str) -> List[str]:
     item_data = {
         "app_id": os.environ["GOO_LAB_APP_ID"],
-        "title": "",
-        "body": "",
+        "title": title,
+        "body": body,
         "max_num": 10,
     }
     try:
@@ -154,28 +181,33 @@ def get_keywords():
         response.raise_for_status()
     except requests.exceptions.RequestException as e:  # エラーの場合のみ
         print(e)
+        return []
     else:  # 正常に処理された場合のみ
         response_json = json.loads(response.text)
-        print(response_json)
+        keywords = []
+        for keyword in response_json["keywords"]:
+            keywords.append(list(keyword.keys())[0])
+        return keywords
     finally:  # 常に実行
         pass
 
 
 # テキストペア類似度
-def get_textpair():
+def get_similarity(text1: str, text2: str) -> float:
     item_data = {
         "app_id": os.environ["GOO_LAB_APP_ID"],
-        "text1": "",
-        "text2": "",
+        "text1": text1,
+        "text2": text2,
     }
     try:
         response = requests.post("https://labs.goo.ne.jp/api/textpair", json=item_data)
         response.raise_for_status()
     except requests.exceptions.RequestException as e:  # エラーの場合のみ
         print(e)
+        return 0.0
     else:  # 正常に処理された場合のみ
         response_json = json.loads(response.text)
-        print(response_json)
+        return response_json["score"]
     finally:  # 常に実行
         pass
 

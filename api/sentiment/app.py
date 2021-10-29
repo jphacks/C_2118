@@ -16,4 +16,4 @@ def get_positiveness():
     return jsonify({"positiveness": positiveness})
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=5001)

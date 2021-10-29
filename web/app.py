@@ -40,6 +40,7 @@ class Comment(db.Model):
     datetime = db.Column(db.DateTime, nullable=False)  # 日付時間
     keywords = db.Column(db.String, nullable=False)  # 抽出したキーワード
     similar_to = db.Column(db.String, nullable=False)  # 類似しているコメントのID
+    has_similar_comment = db.Column(db.Boolean, nullable=False)
 
     def serialize(self):
         return {
@@ -51,6 +52,7 @@ class Comment(db.Model):
             "datetime": f"{self.datetime:%Y-%m-%d %H:%M:%S}",
             "keywords": self.keywords,
             "similar_to": self.similar_to,
+            "has_similar_comment": self.has_similar_comment,
         }
 
 
@@ -71,6 +73,7 @@ def post_comment():
             body=comment["body"],
             position=comment["position"],
             datetime=datetime.datetime.today(),
+            has_similar_comment=False,
         )
 
     except KeyError as e:
@@ -92,6 +95,13 @@ def post_comment():
         new_comment.similar_to = (
             list(sorted(candidates, key=lambda x: x[0]))[-1][1] if candidates else "0"
         )
+        # has_similar_comment変更
+        similar_comment = Comment.query.filter_by(
+            comment_id=new_comment.similar_to
+        ).first()
+        if similar_comment:
+            similar_comment.has_similar_comment = True
+            db.session.commit()
 
         # キーワード
         new_comment.keywords = json.dumps(

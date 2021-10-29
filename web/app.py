@@ -152,13 +152,13 @@ def get_comment(comment_id):
 @app.route("/comment/<comment_id>/replies", methods=["GET"])
 def get_reply_comments(comment_id):
     agree_replies = Comment.query.filter_by(
-        parent_comment_id=comment_id, position=1
+        parent_comment_id=comment_id, position=1, similar_to=0
     ).all()
     disagree_replies = Comment.query.filter_by(
-        parent_comment_id=comment_id, position=-1
+        parent_comment_id=comment_id, position=-1, similar_to=0
     ).all()
     neutral_replies = Comment.query.filter_by(
-        parent_comment_id=comment_id, position=0
+        parent_comment_id=comment_id, position=0, similar_to=0
     ).all()
     return jsonify(
         {
@@ -196,12 +196,9 @@ def get_comment_parents(comment_id):
 
 @app.route("/comment/<comment_id>/get_similar_comments", methods=["GET"])
 def get_similar_comments(comment_id):
-    return jsonify(
-        [
-            comment.serialize()
-            for comment in Comment.query.filter_by(similar_to=comment_id).all()
-        ]
-    )
+    res = [Comment.query.filter_by(comment_id=comment_id).first().serialize()]
+    res.extend([comment.serialize() for comment in Comment.query.filter_by(similar_to=comment_id).all() ])
+    return jsonify(res)
 
 
 # キーワード抽出

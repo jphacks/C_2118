@@ -84,3 +84,34 @@ main .position-buttons button.neutral:hover {
 main .replies .comment {
   border-top: 1px solid #0001;
 }
+
+main .replies .comment.has-similar-comment {
+  display: block;
+  width: 100%;
+  padding-bottom: 2.25rem;
+  text-align: initial;
+  cursor: pointer;
+}
+
+main .replies .comment.has-similar-comment.expanded .title, main .replies .comment.has-similar-comment.expanded .body, main .replies .comment.has-similar-comment.expanded::before {
+  display: none;
+}
+
+main .replies .comment.has-similar-comment::after {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding-bottom: 0.75rem;
+  color: #0008;
+  text-align: center;
+}
+main .replies .comment.has-similar-comment.contracted::after {
+  content: "🔽近い意見のコメントも見る";
+}
+main .replies .comment.has-similar-comment.expanded::after {
+  content: "🔼近い意見のコメントを閉じる";
+}
+
+main .replies .similar-comment-area .comment {
+  border-top: none;
+}

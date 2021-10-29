@@ -180,6 +180,16 @@ def get_comment_parents(comment_id):
     return jsonify(parents)
 
 
+@app.route("/comment/<comment_id>/get_similar_comments", methods=["GET"])
+def get_similar_comments(comment_id):
+    return jsonify(
+        [
+            comment.serialize()
+            for comment in Comment.query.filter_by(similar_to=comment_id).all()
+        ]
+    )
+
+
 # キーワード抽出
 def get_keywords(title: str, body: str) -> List[str]:
     item_data = {

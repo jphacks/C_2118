@@ -79,7 +79,7 @@ def post_comment():
     else:
         # 類似コメント
         candidates = []
-        for old_comment in Comment.query.order_by(Comment.comment_id.desc()).all():
+        for old_comment in Comment.query.filter_by(parent_comment_id=new_comment.parent_comment_id).all():
             similarity = get_similarity(new_comment.body, old_comment.body)
             if similarity >= 0.6:  # 閾値
                 candidates.append(

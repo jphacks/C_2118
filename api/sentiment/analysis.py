@@ -8,7 +8,7 @@ model = AutoModelForSequenceClassification.from_pretrained(
 tokenizer = AutoTokenizer.from_pretrained(
     "cl-tohoku/bert-base-japanese-whole-word-masking"
 )
-model.load_adapter("./adapter/sst-2/")
+model.load_adapter("./api/sentiment/adapter/sst-2/")
 
 
 def predict(sentence):

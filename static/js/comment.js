@@ -132,6 +132,16 @@ const openReplyForm = (position) => {
   replyComment.style.display = "block";
 };
 
+fetchParents()
+  .then((parents) => {
+    console.log(parents);
+    for (parent of parents) {
+      commentTree.prepend(makeCommentElm(parent, true));
+    }
+  }).then(() => {
+    window.scrollTo(0, document.querySelector(".comment-tree div.comment").getBoundingClientRect().top);
+  });
+
 fetchReplies()
   .then((replies) => {
     console.log(replies);
@@ -143,13 +153,5 @@ fetchReplies()
     }
     for (reply of replies.neutral) {
       neutralReplies.appendChild(makeCommentElm(reply));
-    }
-  });
-
-fetchParents()
-  .then((parents) => {
-    console.log(parents);
-    for (parent of parents) {
-      commentTree.prepend(makeCommentElm(parent, true));
     }
   });

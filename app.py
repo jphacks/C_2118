@@ -12,6 +12,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+# ID生成
+from snowflake import Snowflake
+
+snowflake = Snowflake()
+
+
 app = Flask(__name__, static_folder="static")
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.sqlite"
@@ -50,7 +57,7 @@ def index():
 def post_comment():
     try:
         comment = json.loads(request.data)
-        comment_id = str(random.randint(1, 100000))  # コメントID生成
+        comment_id = str(snowflake.generate())  # コメントID生成
         new_comment = Comment(
             comment_id=comment_id,
             parent_comment_id=str(comment["parent_comment_id"]),

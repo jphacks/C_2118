@@ -14,6 +14,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# index.htmlの新着親コメント表示数
+DISPLAY_COMMENT_COUNT = 5
 
 # ID生成
 from snowflake import Snowflake
@@ -58,6 +60,20 @@ class Comment(db.Model):
 
 @app.route("/")
 def index():
+    now_page = int(request.args.get("p")) if request.args.get("p") is not None else 1
+    is_last_page = Comment.query.filter_by(parent_comment_id="0").count() <= now_page * DISPLAY_COMMENT_COUNT
+
+    return render_template(
+        "index.html",
+        comments=Comment.query.filter_by(parent_comment_id="0")
+        .order_by(Comment.datetime.desc())
+        .offset(DISPLAY_COMMENT_COUNT * (now_page - 1))
+        .limit(DISPLAY_COMMENT_COUNT)
+        .all(),
+        now_page=now_page,
+        is_last_page=is_last_page,
+    )
+
     return render_template("index.html")
 
 

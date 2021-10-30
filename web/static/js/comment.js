@@ -80,9 +80,30 @@ const fetchParents = async () => {
     });
 };
 
-const makeCommentElm = (json, hasReply = false) => {
-  const commentElm = document.createElement("a");
-  commentElm.setAttribute("href", `/comment/${json.comment_id}`);
+const fetchSimilarComments = async (comment_id) => {
+  return fetch(`/comment/${comment_id}/get_similar_comments`) // 一日一回 URLは資源を書け、動作はMethodで表現しろの舞
+    .then((response) => {
+      return response.json();
+    }).then((responseJSON) => {
+      return responseJSON;
+    }).catch((error) => {
+      console.error(error);
+    });
+}
+
+const makeCommentElm = (json, hasReply = false, checkSimilarComment = false) => {
+  const fragment = document.createDocumentFragment();
+  let commentElm;
+  if (checkSimilarComment && json.has_similar_comment) {
+    commentElm = document.createElement("button");
+    commentElm.type = "button";
+    commentElm.addEventListener("click", (ev) => { expandSimilarComment(ev.currentTarget, json.comment_id) });
+    commentElm.classList.add("has-similar-comment");
+  } else {
+    commentElm = document.createElement("a");
+    commentElm.setAttribute("href", `/comment/${json.comment_id}`);
+  }
+
   commentElm.classList.add("comment");
   switch (json.position) {
     case 1:
@@ -94,6 +115,7 @@ const makeCommentElm = (json, hasReply = false) => {
     case 0:
       commentElm.classList.add("neutral");
   }
+
   const commentTitleElm = document.createElement("h2");
   commentTitleElm.classList.add("title");
   commentTitleElm.textContent = json.title;
@@ -108,7 +130,45 @@ const makeCommentElm = (json, hasReply = false) => {
     commentThreadElm.classList.add("thread");
     commentElm.appendChild(commentThreadElm);
   }
-  return commentElm;
+  fragment.append(commentElm);
+
+  if (checkSimilarComment && json.has_similar_comment) {
+    const similarCommentArea = document.createElement("div");
+    commentElm.classList.add("contracted");
+    similarCommentArea.classList.add("similar-comment-area", "contracted");
+    fragment.append(similarCommentArea);
+  }
+
+  return fragment;
+};
+
+const expandSimilarComment = (target, comment_id) => {
+  if (target.isExpanded) {
+    target.classList.remove("expanded");
+    target.nextElementSibling.style.display = "none";
+    target.classList.add("contracted");
+    target.isExpanded = false;
+    return;
+  }
+  if (target.alreadyFetchedSimilarComment) {
+    target.classList.remove("contracted");
+    target.nextElementSibling.style.display = "block";
+    target.classList.add("expanded");
+    target.isExpanded = true;
+    return;
+  }
+  fetchSimilarComments(comment_id)
+    .then((similarComments) => {
+      const similarCommentArea = target.nextElementSibling;
+      console.log(similarComments);
+      for (similarComment of similarComments) {
+        similarCommentArea.appendChild(makeCommentElm(similarComment, false, false));
+      }
+      target.alreadyFetchedSimilarComment = true;
+      target.classList.remove("contracted");
+      target.classList.add("expanded");
+      target.isExpanded = true;
+    });
 };
 
 const openReplyForm = (position) => {
@@ -136,7 +196,7 @@ fetchParents()
   .then((parents) => {
     console.log(parents);
     for (parent of parents) {
-      commentTree.prepend(makeCommentElm(parent, true));
+      commentTree.prepend(makeCommentElm(parent, true, false));
     }
   }).then(() => {
     window.scrollTo(0, document.querySelector(".comment-tree div.comment").getBoundingClientRect().top);
@@ -146,12 +206,12 @@ fetchReplies()
   .then((replies) => {
     console.log(replies);
     for (reply of replies.agree) {
-      agreeReplies.appendChild(makeCommentElm(reply));
+      agreeReplies.appendChild(makeCommentElm(reply, false, true));
     }
     for (reply of replies.disagree) {
-      disagreeReplies.appendChild(makeCommentElm(reply));
+      disagreeReplies.appendChild(makeCommentElm(reply, false, true));
     }
     for (reply of replies.neutral) {
-      neutralReplies.appendChild(makeCommentElm(reply));
+      neutralReplies.appendChild(makeCommentElm(reply, false, true));
     }
   });

@@ -198,12 +198,9 @@ def get_comment_parents(comment_id):
 
 @app.route("/comment/<comment_id>/get_similar_comments", methods=["GET"])
 def get_similar_comments(comment_id):
-    return jsonify(
-        [
-            comment.serialize()
-            for comment in Comment.query.filter_by(similar_to=comment_id).all()
-        ]
-    )
+    res = [Comment.query.filter_by(comment_id=comment_id).first().serialize()]
+    res.extend([comment.serialize() for comment in Comment.query.filter_by(similar_to=comment_id).all() ])
+    return jsonify(res)
 
 
 # キーワード抽出

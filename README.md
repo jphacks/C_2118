@@ -1,6 +1,7 @@
-# サンプル（プロダクト名）
-
-[![IMAGE ALT TEXT HERE](https://jphacks.com/wp-content/uploads/2021/07/JPHACKS2021_ogp.jpg)](https://www.youtube.com/watch?v=LUPQFB4QyVo)
+# Yasaron
+<h1 align="center">
+<img src="https://raw.githubusercontent.com/jphacks/C_2118/master/web/static/image/icon.svg" alt="" width="500">
+</h1>
 
 ## 製品概要
 

@@ -6,6 +6,7 @@ import random
 import requests
 import os
 import datetime
+import pytz
 
 from typing import List
 
@@ -102,7 +103,7 @@ def post_comment():
             title=comment["title"],
             body=comment["body"],
             position=comment["position"],
-            datetime=datetime.datetime.today(),
+            datetime=datetime.datetime.now(pytz.timezone("Asia/Tokyo")),
             has_similar_comment=False,
         )
 

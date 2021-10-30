@@ -20,6 +20,9 @@
     <div class="comment-tree">
       <div class="comment {% if position == 1%} agree {% elif position == -1 %} disagree {% else %} neutral {% endif %}">
         <h2 class="title">{{ title }}</h2>
+        <div class="keywords">
+          <span class="raw-keywords" style="display: none;">{{ keywords }}</span>
+        </div>
         <p class="body">{{ body }}</p>
         <p class="created-at">{{ datetime }}</p>
         <div class="position-buttons">

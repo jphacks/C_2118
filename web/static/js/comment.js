@@ -2,6 +2,7 @@ const commentTree = document.querySelector(".comment-tree");
 const replyComment = document.querySelector(".comment.reply");
 const newCommentForm = document.querySelector("form.new-comment-form");
 const newCommentFormSubmitButton = document.querySelector("button.new-comment-form-submit-button");
+const keywordElms = document.querySelector(".keywords");
 
 const agreeReplies = document.querySelector(".replies.agree");
 const disagreeReplies = document.querySelector(".replies.disagree");
@@ -215,3 +216,11 @@ fetchReplies()
       neutralReplies.appendChild(makeCommentElm(reply, false, true));
     }
   });
+
+for (keyword of document.querySelector(".raw-keywords").textContent.split(' ')) {
+  const keywordElm = document.createElement("a");
+  keywordElm.classList.add("keyword");
+  keywordElm.textContent = keyword;
+  keywordElm.setAttribute("href", `/keyword/${keyword}`);
+  keywordElms.appendChild(keywordElm);
+}

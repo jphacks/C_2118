@@ -40,6 +40,21 @@ main .comment::before {
   left: 0.5rem;
 }
 
+.keywords {
+  margin-top: 0.5rem;
+  margin-left: 2rem;
+  margin-right: 0.5rem;
+}
+
+.keywords a {
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #000C;
+  border-radius: 0.75rem;
+}
+
 main .comment.agree::before {
   content: "👍";
 }
@@ -62,6 +77,7 @@ main .comment .body {
   margin-left: 2rem;
   margin-right: 0.5rem;
   line-height: 2rem;
+  overflow-wrap: break-word;
 }
 
 main form.new-comment-form input[type="text"] {

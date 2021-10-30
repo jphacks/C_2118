@@ -1,5 +1,5 @@
 body {
-  padding: 3rem 0 0;
+  padding: 3.25rem 0 0;
   color: #000C;
 }
 
@@ -21,8 +21,9 @@ header a {
   display: block;
 }
 
-header h1 {
-  font-weight: bold;
+header img {
+  height: 1.25rem;
+  width: auto;
 }
 
 main .comment {
@@ -150,7 +151,9 @@ footer > div > a {
 }
 
 footer > div img {
+  margin: 0 auto;
   height: auto;
   min-width: 100px;
+  max-width: 240px;
   width: 100%;
 }

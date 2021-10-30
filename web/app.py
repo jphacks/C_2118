@@ -91,6 +91,10 @@ def index():
 def post_comment():
     try:
         comment = json.loads(request.data)
+
+        if len(comment["body"]) >= 1000:
+            abort(400)
+
         comment_id = str(snowflake.generate())  # コメントID生成
         new_comment = Comment(
             comment_id=comment_id,

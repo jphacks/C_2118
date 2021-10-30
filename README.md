@@ -44,16 +44,19 @@ PWAを用いてスマホ向けウェブアプリとしてリリースしたい�
 ## 開発技術
 ### 活用した技術
 #### API・データ
-* 
-* 
+* gooラボAPI
+    * [テキストペア類似度API](https://labs.goo.ne.jp/api/textpair_doc)
+    * [キーワード抽出API ](https://labs.goo.ne.jp/api/jp/keyword-extraction/)
+* [感情分析用アダプター(未実装)](https://github.com/BandaiNamcoResearchInc/sentiment-analysis-adapter)
 
 #### フレームワーク・ライブラリ・モジュール
 * Flask
 * SQLite
+* SQLAlchemy
 
 #### デバイス
-* 
-* 
+* **スマホ**
+* PC・タブレット
 
 ### 独自技術
 #### ハッカソンで開発した独自機能・技術

@@ -1,5 +1,28 @@
 body {
+  padding: 3rem 0 0;
   color: #000C;
+}
+
+header {
+  display: flex;
+  padding: 0.5rem 0;
+  align-items: center;
+  justify-content: space-around;
+  background: #FFF;
+  border-bottom: 1px solid #0004;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+}
+
+header a {
+  padding: 0.5rem 1rem;
+  display: block;
+}
+
+header h1 {
+  font-weight: bold;
 }
 
 main .comment {
@@ -41,20 +64,28 @@ main .comment .body {
 
 main form.new-comment-form input[type="text"] {
   display: block;
+  height: 2rem;
   width: calc(100% - 2.5rem);
-  line-height: 1.5rem;
+  padding: 0.5rem 0.75rem;
+  line-height: 1rem;
   font-weight: bold;
+  background: #0001;
+  border-radius: 1rem;
 }
 
 main form.new-comment-form textarea {
+  margin-top: 0.75rem;
   display: block;
   width: calc(100% - 2.5rem);
+  padding: 0.5rem 0.75rem;
   resize: vertical;
-  line-height: 2rem;
+  line-height: 1.5rem;
+  background: #0001;
+  border-radius: 1rem;
 }
 main form.new-comment-form .position {
-  margin-top: 0.5rem;
-  padding: 0 2rem;
+  margin-top: 0.75rem;
+  padding: 0 0.5rem 0 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -87,8 +118,8 @@ main form.new-comment-form input[type="radio"].new-comment-form-position {
 }
 
 main form.new-comment-form button.new-comment-form-submit-button {
-  margin: 1rem 2rem 0 2rem;
-  width: calc(100% - 4rem);
+  margin: 0.75rem 0.5rem 0 2rem;
+  width: calc(100% - 2.5rem);
   display: block;
   padding: 0.5rem 1rem;
   line-height: 1rem;
@@ -101,4 +132,25 @@ main form.new-comment-form button.new-comment-form-submit-button:disabled {
   color: #0004;
   border: 2px solid #0004;
   cursor: default;
+}
+
+footer {
+  padding: 1rem 0.5rem;
+  border-top: 1px solid #0004;
+}
+
+footer > div {
+  margin: 0 auto;
+  text-align: center;
+  color: #0008;
+}
+
+footer > div > a {
+  line-height: 1.5rem;
+}
+
+footer > div img {
+  height: auto;
+  min-width: 100px;
+  width: 100%;
 }

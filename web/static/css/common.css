@@ -58,6 +58,7 @@ main .comment .title {
 }
 
 main .comment .body {
+  margin-top: 0.75rem;
   margin-left: 2rem;
   margin-right: 0.5rem;
   line-height: 2rem;

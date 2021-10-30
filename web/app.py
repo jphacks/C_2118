@@ -93,7 +93,7 @@ def post_comment():
     try:
         comment = json.loads(request.data)
 
-        if len(comment["body"]) >= 1000:
+        if not (1 <= len(comment["body"]) <= 2000 and 1 <= len(comment["title"]) <= 200):
             abort(400)
 
         comment_id = str(snowflake.generate())  # コメントID生成

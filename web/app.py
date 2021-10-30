@@ -31,6 +31,13 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 
+class Keyword(db.Model):
+    __tablename__ = "keywords"
+    keyword_id = db.Column(db.String, primary_key=True)
+    comment_id = db.Column(db.String, nullable=False)
+    keyword = db.Column(db.String, nullable=False)
+
+
 class Comment(db.Model):
     __tablename__ = "comments"
 
@@ -61,7 +68,10 @@ class Comment(db.Model):
 @app.route("/")
 def index():
     now_page = int(request.args.get("p")) if request.args.get("p") is not None else 1
-    is_last_page = Comment.query.filter_by(parent_comment_id="0").count() <= now_page * DISPLAY_COMMENT_COUNT
+    is_last_page = (
+        Comment.query.filter_by(parent_comment_id="0").count()
+        <= now_page * DISPLAY_COMMENT_COUNT
+    )
 
     return render_template(
         "index.html",
@@ -98,8 +108,8 @@ def post_comment():
     else:
         # 類似コメント
         candidates = []
-        for old_comment in Comment.query.filter_by(
-            parent_comment_id=new_comment.parent_comment_id
+        for old_comment in Comment.query.filter_by("
+            parent_comment_id=new_comment.parent_comment_id, similar_to="0"
         ).all():
             similarity = get_similarity(new_comment.body, old_comment.body)
             if similarity >= 0.6:  # 閾値
@@ -120,9 +130,17 @@ def post_comment():
             db.session.commit()
 
         # キーワード
-        new_comment.keywords = json.dumps(
-            get_keywords(new_comment.title, new_comment.body)
-        )
+        keywords = get_keywords(new_comment.title, new_comment.body)
+        for keyword in keywords:
+            new_keyword = Keyword(
+                keyword_id=snowflake.generate(),
+                comment_id=new_comment.comment_id,
+                keyword=keyword,
+            )
+            db.session.add(new_keyword)
+            db.session.commit()
+
+        new_comment.keywords = json.dumps(keywords)
 
         db.session.add(new_comment)
         db.session.commit()
@@ -199,8 +217,23 @@ def get_comment_parents(comment_id):
 @app.route("/comment/<comment_id>/get_similar_comments", methods=["GET"])
 def get_similar_comments(comment_id):
     res = [Comment.query.filter_by(comment_id=comment_id).first().serialize()]
-    res.extend([comment.serialize() for comment in Comment.query.filter_by(similar_to=comment_id).all() ])
+    res.extend(
+        [
+            comment.serialize()
+            for comment in Comment.query.filter_by(similar_to=comment_id).all()
+        ]
+    )
     return jsonify(res)
+
+
+@app.route("/keyword/<keyword>", methods=["GET"])
+def get_comments_from_keyword(keyword):
+    keywords = Keyword.query.filter_by(keyword=keyword).all()
+    return render_template(
+        "keyword.html",
+        title=keyword,
+        keywords=keywords,
+    )
 
 
 # キーワード抽出

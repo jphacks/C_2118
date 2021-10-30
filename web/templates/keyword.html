@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+</head>
+
+<body>
+    {% for keyword in keywords %}
+    <p><a href="/comment/{{keyword.comment_id}}">{{keyword.comment_id}}</a></p>
+    {% endfor %}
+</body>
+
+</html>

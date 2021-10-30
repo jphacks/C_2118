@@ -1,17 +1,29 @@
-main .comment::before {
-  position: absolute;
-  height: 1.5rem;
-  width: 1rem;
-  padding: 0.25rem 0;
-  left: 0.5rem;
+main .new-topics a.comment {
+  border-top: 1px solid #0001;
+}
+main .new-topics a.comment:last-of-type {
+  border-bottom: 1px solid #0001;
 }
 
-main .comment.agree::before {
-  content: "👍";
+.page-transition {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
-main .comment.disagree::before {
-  content: "👎";
+
+.page-transition .page-transition-button {
+  display: block;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  color: #0004;
+  border: 2px solid #0004;
 }
-main .comment.neutral::before {
-  content: "✋";
+
+.page-transition a.page-transition-button {
+  color: #000C;
+  border: 2px solid #000C;
+}
+.page-transition a.page-transition-button:hover {
+  background: #FFE0B2;
 }

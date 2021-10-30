@@ -35,24 +35,6 @@ main .comment-tree div.comment .created-at {
   line-height: 0.8rem;
 }
 
-main .comment::before {
-  position: absolute;
-  height: 1.5rem;
-  width: 1rem;
-  padding: 0.25rem 0;
-  left: 0.5rem;
-}
-
-main .comment.agree::before {
-  content: "👍";
-}
-main .comment.disagree::before {
-  content: "👎";
-}
-main .comment.neutral::before {
-  content: "✋";
-}
-
 main .position-buttons {
   margin-top: 1rem;
   padding: 0 2rem;

@@ -8,6 +8,24 @@ main .comment {
   padding: 0.75rem 0;
 }
 
+main .comment::before {
+  position: absolute;
+  height: 1.5rem;
+  width: 1rem;
+  padding: 0.25rem 0;
+  left: 0.5rem;
+}
+
+main .comment.agree::before {
+  content: "👍";
+}
+main .comment.disagree::before {
+  content: "👎";
+}
+main .comment.neutral::before {
+  content: "✋";
+}
+
 main .comment .title {
   margin-left: 2rem;
   margin-right: 0.5rem;

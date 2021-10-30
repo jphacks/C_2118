@@ -22,18 +22,15 @@
         <textarea class="body" name="body" placeholder="あなたの考えを共有してみてください！"></textarea>
         <div class="position">
           <div>
-            <input type="radio" name="position" id="position-form-agree" class="new-comment-form-position"
-              value="agree">
+            <input type="radio" name="position" id="position-form-agree" class="new-comment-form-position" value="agree">
             <label for="position-form-agree" class="new-comment-form-position-label">賛成</label>
           </div>
           <div>
-            <input type="radio" name="position" id="position-form-disagree" class="new-comment-form-position"
-              value="disagree">
+            <input type="radio" name="position" id="position-form-disagree" class="new-comment-form-position" value="disagree">
             <label for="position-form-disagree" class="new-comment-form-position-label">反対</label>
           </div>
           <div>
-            <input type="radio" name="position" id="position-form-neutral" class="new-comment-form-position"
-              value="neutral" checked>
+            <input type="radio" name="position" id="position-form-neutral" class="new-comment-form-position" value="neutral" checked>
             <label for="position-form-neutral" class="new-comment-form-position-label">中立</label>
           </div>
         </div>
@@ -42,17 +39,27 @@
     </div>
     <div class="new-topics">
       {% for comment in comments %}
-      <p><a href="/comment/{{comment.comment_id}}">{{comment.comment_id}} {{comment.title}}</a>
-      </p>
+      <a href="/comment/{{ comment.comment_id }}" class="comment {% if position == 1%} agree {% elif position == -1 %} disagree {% else %} neutral {% endif %}">
+        <h2 class="title">{{ comment.title }}</h2>
+        <p class="body">{{ comment.body }}</p>
+      </a>
       {% endfor %}
-      <p>
+      <div class="page-transition">
         {% if now_page > 1 %}
-        <a href="./?p={{now_page-1}}">前のページ</a>
+        {% if now_page == 2 %}
+        <a href="./" class="page-transition-button">新しい話題</a>
+        {% else %}
+        <a href="./?p={{ now_page - 1 }}" class="page-transition-button">新しい話題</a>
+        {% endif %}
+        {% else %}
+        <div class="page-transition-button">新しい話題</div>
         {% endif %}
         {% if not is_last_page %}
-        <a href="./?p={{now_page+1}}">次のページ</a>
+        <a href="./?p={{ now_page + 1 }}" class="page-transition-button">以前の話題</a>
+        {% else %}
+        <div class="page-transition-button">以前の話題</div>
         {% endif %}
-      </p>
+      </div>
     </div>
   </main>
 </body>

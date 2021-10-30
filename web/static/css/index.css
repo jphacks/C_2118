@@ -6,7 +6,7 @@ main .new-topics a.comment:last-of-type {
 }
 
 .page-transition {
-  margin-top: 1rem;
+  padding: 1rem 0;
   display: flex;
   align-items: center;
   justify-content: space-around;

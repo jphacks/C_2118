@@ -108,7 +108,7 @@ def post_comment():
     else:
         # 類似コメント
         candidates = []
-        for old_comment in Comment.query.filter_by("
+        for old_comment in Comment.query.filter_by(
             parent_comment_id=new_comment.parent_comment_id, similar_to="0"
         ).all():
             similarity = get_similarity(new_comment.body, old_comment.body)
